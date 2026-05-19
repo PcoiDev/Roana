@@ -17,6 +17,7 @@
 	- bold Text: **Text**
 	- italic Text: *Text*
 	- superscript: ^Text^
+	- code: `Text`
 	
 	@deprecated
 	@document https://create.roblox.com/docs/reference/engine/classes/ScriptEditorService#RegisterAutocompleteCallback
@@ -101,10 +102,16 @@ local function ParseMarkdown(Text: string)
 	Text = EscapeMarkdown(Text)
 	-- Process bold Text: ** Text **
 	Text = Text:gsub("%*%*([^%*]+)%*%*", "<strong>%1</strong>")
+
 	-- Process italic Text: * Text *
 	Text = Text:gsub("%*([^<%*]-)%*", "<em>%1</em>")
+
 	-- Process superscript: ^ Text ^
 	Text = Text:gsub("%^([^<%^]-)%^", "<sup>%1</sup>")
+
+	-- Process code Text: ` Text `
+	Text = Text:gsub("%`([^<%^]-)%`", "<code>%1</code>")
+
 	-- Restore escaped sequences
 	Text = RestoreEscaped(Text)
 
